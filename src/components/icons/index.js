@@ -2,6 +2,8 @@ import BookViewIcon from './BookViewIcon';
 import CanvasIndexIcon from './CanvasIndexIcon';
 import GalleryViewIcon from './GalleryViewIcon';
 import MiradorIcon from './MiradorIcon';
+import KoreanMemoryIcon from './KoreanMemoryIcon';
+import IIIFIcon from './IIIFIcon';
 import RestoreZoomIcon from './RestoreZoomIcon';
 import ThumbnailNavigationBottomIcon from './ThumbnailNavigationBottomIcon';
 import ThumbnailNavigationRightIcon from './ThumbnailNavigationRightIcon';
@@ -16,6 +18,8 @@ export {
   CanvasIndexIcon,
   GalleryViewIcon,
   MiradorIcon,
+  KoreanMemoryIcon,
+  IIIFIcon,
   RestoreZoomIcon,
   ThumbnailNavigationBottomIcon,
   ThumbnailNavigationRightIcon,

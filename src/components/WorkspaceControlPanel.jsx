@@ -11,14 +11,17 @@ import ns from '../config/css-ns';
 
 const Root = styled(AppBar, { name: 'WorkspaceControlPanel', slot: 'root' })(({ ownerState, theme }) => ({
   display: 'flex',
-  height: 64,
+  flexDirection: 'row',
+  height: '50px',
+  justifyContent: 'space-between',
   padding: theme.spacing(1),
   paddingBottom: 0,
+  paddingTop: 0,
   position: 'relative',
-  [theme.breakpoints.up('sm')]: {
-    height: 'auto',
-    width: ownerState.variant === 'wide' ? 'auto' : 64,
-  },
+  // [theme.breakpoints.up('sm')]: {
+  //   height: 'auto',
+  //   width: ownerState.variant === 'wide' ? 'auto' : 64,
+  // },
   ...(ownerState.variant === 'wide' && {
     width: 'auto',
   }),
@@ -26,26 +29,21 @@ const Root = styled(AppBar, { name: 'WorkspaceControlPanel', slot: 'root' })(({ 
 
 const StyledToolbar = styled(Toolbar, { name: 'WorkspaceControlPanel', slot: 'toolbar' })(({ theme }) => ({
   display: 'flex',
-  flexGrow: 1,
   justifyContent: 'space-between',
   [theme.breakpoints.up('sm')]: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    minHeight: 0,
+    minHeight: 'unset',
   },
 }));
 
 const StyledWorkspaceButtons = styled('div', { name: 'WorkspaceControlPanel', slot: 'buttonArea' })(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(2),
-    marginBottom: theme.spacing(1),
-    marginTop: theme.spacing(1),
+    flexDirection: 'row',
   },
 }));
 
 const StyledBranding = styled(Branding, { name: 'WorkspaceControlPanel', slot: 'branding' })(({ theme }) => ({
+  width: 'fit-content',
   [theme.breakpoints.up('xs')]: {
     display: 'none',
   },
@@ -69,15 +67,13 @@ export function WorkspaceControlPanel({ variant = 'default', ...rest }) {
       component="nav"
       aria-label={t('workspaceNavigation')}
     >
-      <StyledToolbar
-        disableGutters
-      >
-        <WorkspaceAddButton />
+      <StyledBranding variant={variant} />
+      <StyledToolbar disableGutters>
+        {/* <WorkspaceAddButton /> */}
         <StyledWorkspaceButtons>
           <WorkspaceControlPanelButtons />
         </StyledWorkspaceButtons>
       </StyledToolbar>
-      <StyledBranding variant={variant} />
     </Root>
   );
 }

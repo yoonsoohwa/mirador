@@ -20,9 +20,6 @@ const Root = styled('div', { name: 'WorkspaceArea', slot: 'root' })(({ theme }) 
   position: 'absolute',
   right: 0,
   top: 0,
-  [theme.breakpoints.up('sm')]: {
-    flexDirection: 'row',
-  },
 }));
 
 const ViewerArea = styled('main', { name: 'WorkspaceArea', slot: 'viewer' })(() => ({
@@ -46,21 +43,14 @@ export function WorkspaceArea({
 
   return (
     <Root ownerState={ownerState}>
-      {
-        isWorkspaceControlPanelVisible
-          && <WorkspaceControlPanel variant={controlPanelVariant} />
-      }
+      {isWorkspaceControlPanelVisible && <WorkspaceControlPanel variant={controlPanelVariant} />}
       <ViewerArea
         className={ns('viewer')}
         lang={lang}
         aria-label={t('workspace')}
         {...(areaRef ? { ref: areaRef } : {})}
       >
-        {
-          isWorkspaceAddVisible
-            ? <WorkspaceAdd />
-            : <Workspace />
-        }
+        {isWorkspaceAddVisible ? <WorkspaceAdd /> : <Workspace />}
         <ErrorDialog />
         <BackgroundPluginArea />
       </ViewerArea>
