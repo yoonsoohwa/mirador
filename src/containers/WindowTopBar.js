@@ -7,6 +7,7 @@ import { WindowTopBar } from '../components/WindowTopBar';
 
 /** mapStateToProps */
 const mapStateToProps = (state, { windowId }) => {
+  console.log(state);
   const config = getWindowConfig(state, { windowId });
 
   return {
@@ -33,9 +34,6 @@ const mapDispatchToProps = (dispatch, { windowId }) => ({
   toggleWindowSideBar: () => dispatch(actions.toggleWindowSideBar(windowId)),
 });
 
-const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withPlugins('WindowTopBar'),
-);
+const enhance = compose(connect(mapStateToProps, mapDispatchToProps), withPlugins('WindowTopBar'));
 
 export default enhance(WindowTopBar);
