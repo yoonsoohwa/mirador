@@ -10,7 +10,7 @@ import { PluginHook } from './PluginHook';
 export function WorkspaceControlPanelButtons({ ...rest }) {
   return (
     <>
-      {/* <WindowListButton /> */}
+      <WindowListButton />
       <WorkspaceMenuButton />
       <WorkspaceOptionsButton />
       <FullScreenButton />

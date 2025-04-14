@@ -13,11 +13,19 @@ export function FullScreenButton({ className = undefined }) {
   const handle = useContext(FullScreenContext);
 
   if (handle && handle.active) {
-    return <MiradorMenuButton className={className} aria-label={t('exitFullScreen')} onClick={handle.exit}><FullscreenExitIcon /></MiradorMenuButton>;
+    return (
+      <MiradorMenuButton className={className} aria-label={t('exitFullScreen')} onClick={handle.exit}>
+        <FullscreenExitIcon sx={{ color: '#ffffff' }} />
+      </MiradorMenuButton>
+    );
   }
 
   if (handle) {
-    return <MiradorMenuButton className={className} aria-label={t('workspaceFullScreen')} onClick={handle.enter}><FullscreenIcon /></MiradorMenuButton>;
+    return (
+      <MiradorMenuButton className={className} aria-label={t('workspaceFullScreen')} onClick={handle.enter}>
+        <FullscreenIcon sx={{ color: '#ffffff' }} />
+      </MiradorMenuButton>
+    );
   }
 
   return null;

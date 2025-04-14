@@ -34,14 +34,9 @@ export function WorkspaceMenuButton() {
         id="menuBtn"
         onClick={handleMenuClick}
       >
-        <SettingsIcon />
+        <SettingsIcon sx={{ color: '#ffffff' }} />
       </MiradorMenuButton>
-      <WorkspaceMenu
-        anchorEl={anchorEl}
-        id={id}
-        handleClose={handleMenuClose}
-        open={open}
-      />
+      <WorkspaceMenu anchorEl={anchorEl} id={id} handleClose={handleMenuClose} open={open} />
     </>
   );
 }

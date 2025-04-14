@@ -38,15 +38,15 @@ export default {
     palette: {
       mode: 'light',
       primary: {
-        main: '#1967d2', // Controls the color of the Add button and current window indicator
+        main: '#B47621', // Controls the color of the Add button and current window indicator
       },
       secondary: {
         main: '#1967d2', // Controls the color of Selects and FormControls
       },
       shades: {
         // Shades that can be used to offset color areas of the Workspace / Window
-        dark: '#eeeeee',
-        main: '#ffffff',
+        dark: '#F6F6F6',
+        main: '#624E3C',
         light: '#f5f5f5',
       },
       error: {
@@ -548,7 +548,7 @@ export default {
     width: 5000, // width of the elastic mode's virtual canvas
   },
   workspaceControlPanel: {
-    enabled: true, // Configure if the control panel should be rendered.  Useful if you want to lock the viewer down to only the configured manifests
+    enabled: false, // Configure if the control panel should be rendered.  Useful if you want to lock the viewer down to only the configured manifests
   },
   galleryView: {
     height: 120, // height of gallery view thumbnails
