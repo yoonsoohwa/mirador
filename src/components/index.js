@@ -73,6 +73,7 @@ export * from './WindowCanvasNavigationControls';
 export * from './WindowList';
 export * from './WindowListButton';
 export * from './WindowSideBar';
+export * from './WindowRightSideBar';
 export * from './WindowSideBarAnnotationsPanel';
 export * from './WindowSideBarButtons';
 export * from './WindowSideBarCanvasPanel';

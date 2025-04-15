@@ -477,7 +477,8 @@ export default {
     allowTopMenuButton: true, // Configure if window view and thumbnail display menu are visible or not
     allowWindowSideBar: false, // Configure if side bar menu is visible or not
     authNewWindowCenter: 'parent', // Configure how to center a new window created by the authentication flow. Options: parent, screen
-    sideBarPanel: 'info', // Configure which sidebar is selected by default. Options: info, attribution, canvas, annotations, search
+    sideBarPanel: 'canvas', // Configure which sidebar is selected by default. Options: info, attribution, canvas, annotations, search
+    rightSideBarPanel: 'info', // Configure which sidebar is selected by default. Options: info, attribution, canvas, annotations, search
     defaultSidebarPanelHeight: 201, // Configure default sidebar height in pixels
     defaultSidebarPanelWidth: 235, // Configure default sidebar width in pixels
     defaultView: 'single', // Configure which viewing mode (e.g. single, book, gallery) for windows to be opened in
@@ -486,15 +487,20 @@ export default {
     highlightAllAnnotations: false, // Configure whether to display annotations on the canvas by default
     showLocalePicker: false, // Configure locale picker for multi-lingual metadata
     sideBarOpen: true, // Configure if the sidebar (and its content panel) is open by default
+    rightSideBarOpen: true, // Configure if the sidebar (and its content panel) is open by default
     switchCanvasOnSearch: true, // Configure if Mirador should automatically switch to the canvas of the first search result
     panels: {
       // Configure which panels are visible in WindowSideBarButtons
-      info: true,
-      attribution: true,
+
       canvas: true,
       annotations: true,
       search: true,
       layers: true,
+    },
+    rightPanels: {
+      // Configure which panels are visible in WindowSideBarButtons
+      info: true,
+      attribution: true,
     },
     views: [
       { key: 'single', behaviors: ['individuals'] },
@@ -566,7 +572,7 @@ export default {
   },
   export: {
     catalog: true,
-    companionWindows: true,
+    companionWindows: false,
     config: true,
     elasticLayout: true,
     layers: true,

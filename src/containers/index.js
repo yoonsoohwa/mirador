@@ -62,6 +62,7 @@ export { default as ConnectedWindowListButton } from './WindowListButton';
 export { default as ConnectedWindowSideBar } from './WindowSideBar';
 export { default as ConnectedWindowSideBarAnnotationsPanel } from './WindowSideBarAnnotationsPanel';
 export { default as ConnectedWindowSideBarButtons } from './WindowSideBarButtons';
+export { default as ConnectedWindowRightSideBarButtons } from './WindowRightSideBarButtons';
 export { default as ConnectedWindowSideBarCanvasPanel } from './WindowSideBarCanvasPanel';
 export { default as ConnectedWindowSideBarCollectionPanel } from './WindowSideBarCollectionPanel';
 export { default as ConnectedWindowSideBarInfoPanel } from './WindowSideBarInfoPanel';
