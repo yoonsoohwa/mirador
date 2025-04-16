@@ -10,6 +10,9 @@ import ViewerInfo from '../containers/ViewerInfo';
 /**
  */
 export function ViewerNavigation({
+  firstCanvasId,
+  lastCanvasId,
+  setCanvas,
   hasNextCanvas = false,
   hasPreviousCanvas = false,
   setNextCanvas = () => {},
@@ -43,6 +46,16 @@ export function ViewerNavigation({
   return (
     <div className={classNames(ns('osd-navigation'))} dir={htmlDir} style={{ display: 'flex' }}>
       <MiradorMenuButton
+        aria-label={t('firstCanvas')}
+        className={ns('first-canvas-button')}
+        disabled={!hasPreviousCanvas}
+        onClick={() => {
+          hasPreviousCanvas && setCanvas(windowId, firstCanvasId);
+        }}
+      >
+        <NavigationIcon style={previousIconStyle} />
+      </MiradorMenuButton>
+      <MiradorMenuButton
         aria-label={t('previousCanvas')}
         className={ns('previous-canvas-button')}
         disabled={!hasPreviousCanvas}
@@ -63,13 +76,26 @@ export function ViewerNavigation({
       >
         <NavigationIcon style={nextIconStyle} />
       </MiradorMenuButton>
+      <MiradorMenuButton
+        aria-label={t('lastCanvas')}
+        className={ns('last-canvas-button')}
+        disabled={!hasNextCanvas}
+        onClick={() => {
+          hasNextCanvas && setCanvas(windowId, lastCanvasId);
+        }}
+      >
+        <NavigationIcon style={nextIconStyle} />
+      </MiradorMenuButton>
     </div>
   );
 }
 
 ViewerNavigation.propTypes = {
+  firstCanvasId: PropTypes.string.isRequired,
   hasNextCanvas: PropTypes.bool,
   hasPreviousCanvas: PropTypes.bool,
+  lastCanvasId: PropTypes.string.isRequired,
+  setCanvas: PropTypes.func.isRequired,
   setNextCanvas: PropTypes.func,
   setPreviousCanvas: PropTypes.func,
   viewingDirection: PropTypes.string,
