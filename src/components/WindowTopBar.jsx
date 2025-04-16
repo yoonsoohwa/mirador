@@ -116,8 +116,6 @@ export function WindowTopBar({
             <CloseIcon />
           </MiradorMenuButton>
         )}
-        <WorkspaceMenuButton />
-        <WorkspaceOptionsButton />
         <FullScreenButton color="success" />
       </StyledToolbar>
     </Root>
