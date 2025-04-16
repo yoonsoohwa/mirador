@@ -103,7 +103,7 @@
     "openCompanionWindow_search": "검색",
     "openInCompanionWindow": "별도의 패널에서 열기",
     "openWindows": "현재 열려있는 윈도우",
-    "pagination": "{{current}} of {{total}}",
+    "pagination": " / {{total}}",
     "position": "배치",
     "previewWindowTitle": "{{title}}",
     "previousCanvas": "이전 아이템",

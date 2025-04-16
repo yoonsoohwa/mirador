@@ -2,15 +2,20 @@ import NavigationIcon from '@mui/icons-material/PlayCircleOutlineSharp';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { display } from '@mui/system';
 import MiradorMenuButton from '../containers/MiradorMenuButton';
 import ns from '../config/css-ns';
+import ViewerInfo from '../containers/ViewerInfo';
 
 /**
  */
 export function ViewerNavigation({
-  hasNextCanvas = false, hasPreviousCanvas = false,
-  setNextCanvas = () => {}, setPreviousCanvas = () => {},
+  hasNextCanvas = false,
+  hasPreviousCanvas = false,
+  setNextCanvas = () => {},
+  setPreviousCanvas = () => {},
   viewingDirection = '',
+  windowId,
 }) {
   const { t } = useTranslation();
   let htmlDir = 'ltr';
@@ -36,23 +41,25 @@ export function ViewerNavigation({
   }
 
   return (
-    <div
-      className={classNames(ns('osd-navigation'))}
-      dir={htmlDir}
-    >
+    <div className={classNames(ns('osd-navigation'))} dir={htmlDir} style={{ display: 'flex' }}>
       <MiradorMenuButton
         aria-label={t('previousCanvas')}
         className={ns('previous-canvas-button')}
         disabled={!hasPreviousCanvas}
-        onClick={() => { hasPreviousCanvas && setPreviousCanvas(); }}
+        onClick={() => {
+          hasPreviousCanvas && setPreviousCanvas();
+        }}
       >
         <NavigationIcon style={previousIconStyle} />
       </MiradorMenuButton>
+      <ViewerInfo windowId={windowId} />
       <MiradorMenuButton
         aria-label={t('nextCanvas')}
         className={ns('next-canvas-button')}
         disabled={!hasNextCanvas}
-        onClick={() => { hasNextCanvas && setNextCanvas(); }}
+        onClick={() => {
+          hasNextCanvas && setNextCanvas();
+        }}
       >
         <NavigationIcon style={nextIconStyle} />
       </MiradorMenuButton>
@@ -66,4 +73,5 @@ ViewerNavigation.propTypes = {
   setNextCanvas: PropTypes.func,
   setPreviousCanvas: PropTypes.func,
   viewingDirection: PropTypes.string,
+  windowId: PropTypes.string.isRequired,
 };
