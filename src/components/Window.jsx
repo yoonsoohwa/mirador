@@ -7,6 +7,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useTranslation } from 'react-i18next';
 import ns from '../config/css-ns';
 import WindowTopBar from '../containers/WindowTopBar';
+import WindowBottomBar from '../containers/WindowBottomBar';
 import PrimaryWindow from '../containers/PrimaryWindow';
 import CompanionArea from '../containers/CompanionArea';
 import MinimalWindow from '../containers/MinimalWindow';
@@ -130,6 +131,7 @@ export function Window({
           </StyledCompanionAreaRight>
         </ContentRow>
         <CompanionArea windowId={windowId} position="far-bottom" />
+        <WindowBottomBar window={windowId} />
         <PluginHook {...ownerState} />
       </Root>
     </ErrorBoundary>

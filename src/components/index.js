@@ -81,6 +81,7 @@ export * from './WindowSideBarCollectionPanel';
 export * from './WindowSideBarInfoPanel';
 export * from './WindowThumbnailSettings';
 export * from './WindowTopBar';
+export * from './WindowBottomBar';
 export * from './WindowTopBarPluginArea';
 export * from './WindowTopBarPluginMenu';
 export * from './WindowTopBarTitle';
