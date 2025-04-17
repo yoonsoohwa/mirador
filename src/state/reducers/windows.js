@@ -28,7 +28,11 @@ export const windowsReducer = (state = {}, action) => {
       };
 
     case ActionTypes.UPDATE_WINDOW:
-      return update([action.id], orig => ({ ...(orig || {}), ...action.payload }), state);
+      return update(
+        [action.id],
+        (orig) => ({ ...(orig || {}), ...action.payload }),
+        state
+      );
 
     case ActionTypes.REMOVE_WINDOW:
       return omit(state, [action.windowId]);
@@ -38,6 +42,14 @@ export const windowsReducer = (state = {}, action) => {
         [action.windowId]: {
           ...state[action.windowId],
           sideBarOpen: !state[action.windowId].sideBarOpen,
+        },
+      };
+    case ActionTypes.TOGGLE_WINDOW_RIGHT_SIDE_BAR:
+      return {
+        ...state,
+        [action.windowId]: {
+          ...state[action.windowId],
+          rightSideBarOpen: !state[action.windowId].rightSideBarOpen,
         },
       };
     case ActionTypes.SET_WINDOW_VIEW_TYPE:
@@ -71,40 +83,62 @@ export const windowsReducer = (state = {}, action) => {
     case ActionTypes.SET_CANVAS:
       if (!state[action.windowId]) return state;
 
-      return update([action.windowId], orig => (
-        {
+      return update(
+        [action.windowId],
+        (orig) => ({
           ...(orig || {}),
           canvasId: action.canvasId,
           visibleCanvases: action.visibleCanvases || [],
-        }), state);
+        }),
+        state
+      );
     case ActionTypes.ADD_COMPANION_WINDOW:
       return {
         ...state,
         [action.windowId]: {
           ...state[action.windowId],
-          companionWindowIds: state[action.windowId].companionWindowIds.concat([action.id]),
+          companionWindowIds: state[action.windowId].companionWindowIds.concat([
+            action.id,
+          ]),
+          // eslint-disable-next-line no-nested-ternary
           ...(action.payload.position === 'left'
             ? { companionAreaOpen: true, sideBarPanel: action.payload.content }
+            : action.payload.position === 'right'
+            ? {
+                companionRightAreaOpen: true,
+                rightSideBarPanel: action.payload.content,
+              }
             : {}),
         },
       };
     case ActionTypes.UPDATE_COMPANION_WINDOW:
-      if (action.payload.position !== 'left') return state;
-
-      return {
-        ...state,
-        [action.windowId]: {
-          ...state[action.windowId],
-          companionAreaOpen: true,
-        },
-      };
+      if (action.payload.position === 'left') {
+        return {
+          ...state,
+          [action.windowId]: {
+            ...state[action.windowId],
+            companionAreaOpen: true,
+          },
+        };
+      }
+      if (action.payload.position === 'right') {
+        return {
+          ...state,
+          [action.windowId]: {
+            ...state[action.windowId],
+            companionRightAreaOpen: true,
+          },
+        };
+      }
+      return state;
     case ActionTypes.REMOVE_COMPANION_WINDOW:
       return {
         ...state,
         [action.windowId]: {
           ...state[action.windowId],
-          companionWindowIds: state[action.windowId]
-            .companionWindowIds.filter(id => id !== action.id),
+          companionWindowIds: state[action.windowId].companionWindowIds.filter(
+            (id) => id !== action.id
+          ),
         },
       };
     case ActionTypes.SELECT_ANNOTATION:
@@ -137,7 +171,8 @@ export const windowsReducer = (state = {}, action) => {
         ...state,
         [action.windowId]: {
           ...state[action.windowId],
-          highlightAllAnnotations: !state[action.windowId].highlightAllAnnotations,
+          highlightAllAnnotations:
+            !state[action.windowId].highlightAllAnnotations,
         },
       };
     case ActionTypes.IMPORT_MIRADOR_STATE:

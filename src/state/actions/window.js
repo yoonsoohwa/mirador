@@ -38,13 +38,22 @@ export function addWindow({ companionWindows, manifest, ...options }) {
         content: 'thumbnailNavigation',
         default: true,
         id: cwThumbs,
-        position: options.thumbnailNavigationPosition || config.thumbnailNavigation.defaultPosition,
+        position:
+          options.thumbnailNavigationPosition ||
+          config.thumbnailNavigation.defaultPosition,
         windowId,
       },
-      ...(companionWindows || []).map((cw, i) => ({ ...cw, id: `cw-${uuid()}` })),
+      ...(companionWindows || []).map((cw, i) => ({
+        ...cw,
+        id: `cw-${uuid()}`,
+      })),
     ];
 
-    if (options.sideBarPanel || config.window.defaultSideBarPanel || config.window.sideBarPanel) {
+    if (
+      options.sideBarPanel ||
+      config.window.defaultSideBarPanel ||
+      config.window.sideBarPanel
+    ) {
       defaultCompanionWindows.unshift({
         content:
           options.sideBarPanel ||
@@ -59,10 +68,30 @@ export function addWindow({ companionWindows, manifest, ...options }) {
       });
     }
 
+    if (
+      options.rightSideBarPanel ||
+      config.window.defaultRightSideBarPanel ||
+      config.window.rightSideBarPanel
+    ) {
+      defaultCompanionWindows.unshift({
+        content:
+          options.rightSideBarPanel ||
+          (options.defaultSearchQuery && 'search') ||
+          config.window.defaultRightSideBarPanel ||
+          config.window.rightSideBarPanel,
+
+        default: true,
+        id: `cw-${uuid()}`,
+        position: 'right',
+        windowId,
+      });
+    }
+
     const defaultOptions = {
       canvasId: undefined,
       collectionIndex: 0,
       companionAreaOpen: true,
+      companionRightAreaOpen: true,
       companionWindowIds: defaultCompanionWindows.map((cw) => cw.id),
       draggingEnabled: true,
       highlightAllAnnotations: config.window.highlightAllAnnotations || false,
@@ -70,13 +99,25 @@ export function addWindow({ companionWindows, manifest, ...options }) {
       manifestId: null,
       maximized: true,
       rangeId: null,
+      rightSideBarOpen:
+        config.window.rightSideBarOpenByDefault !== undefined
+          ? config.window.rightSideBarOpenByDefault ||
+            !!options.defaultSearchQuery
+          : config.window.rightSideBarOpen || !!options.defaultSearchQuery,
+      rightSideBarPanel:
+        options.rightSideBarPanel ||
+        config.window.defaultRightSideBarPanel ||
+        config.window.rightSideBarPanel,
       rotation: null,
       selectedAnnotations: {},
       sideBarOpen:
         config.window.sideBarOpenByDefault !== undefined
           ? config.window.sideBarOpenByDefault || !!options.defaultSearchQuery
           : config.window.sideBarOpen || !!options.defaultSearchQuery,
-      sideBarPanel: options.sideBarPanel || config.window.defaultSideBarPanel || config.window.sideBarPanel,
+      sideBarPanel:
+        options.sideBarPanel ||
+        config.window.defaultSideBarPanel ||
+        config.window.sideBarPanel,
       thumbnailNavigationId: cwThumbs,
     };
 
@@ -132,6 +173,15 @@ export function setCompanionAreaOpen(id, companionAreaOpen) {
   };
 }
 
+/** */
+export function setCompanionRightAreaOpen(id, companionRightAreaOpen) {
+  return {
+    id,
+    payload: { companionRightAreaOpen },
+    type: ActionTypes.UPDATE_WINDOW,
+  };
+}
+
 /**
  * removeWindow - action creator
  *
@@ -153,6 +203,16 @@ export function removeWindow(windowId) {
  */
 export function toggleWindowSideBar(windowId) {
   return { type: ActionTypes.TOGGLE_WINDOW_SIDE_BAR, windowId };
+}
+
+/**
+ * toggleWindowSideBar - action creator
+ *
+ * @param  {String} windowId
+ * @memberof ActionCreators
+ */
+export function toggleWindowRightSideBar(windowId) {
+  return { type: ActionTypes.TOGGLE_WINDOW_RIGHT_SIDE_BAR, windowId };
 }
 
 /**
@@ -191,7 +251,11 @@ export function setWindowViewType(windowId, viewType) {
 }
 
 /** */
-export function showCollectionDialog(manifestId, collectionPath = [], windowId) {
+export function showCollectionDialog(
+  manifestId,
+  collectionPath = [],
+  windowId
+) {
   return {
     collectionPath,
     manifestId,

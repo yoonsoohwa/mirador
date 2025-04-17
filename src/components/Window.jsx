@@ -30,20 +30,22 @@ const columnMixin = {
   minHeight: 0,
 };
 
-const Root = styled(Paper, { name: 'Window', slot: 'root' })(({ ownerState, theme }) => ({
-  ...columnMixin,
-  backgroundColor: theme.palette.shades?.dark,
-  borderRadius: 0,
-  height: '100%',
-  overflow: 'hidden',
-  width: '100%',
-  ...(ownerState?.maximized && {
-    left: 0,
-    position: 'absolute',
-    top: 0,
-    zIndex: theme.zIndex.modal - 1,
-  }),
-}));
+const Root = styled(Paper, { name: 'Window', slot: 'root' })(
+  ({ ownerState, theme }) => ({
+    ...columnMixin,
+    backgroundColor: theme.palette.shades?.dark,
+    borderRadius: 0,
+    height: '100%',
+    overflow: 'hidden',
+    width: '100%',
+    ...(ownerState?.maximized && {
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      zIndex: theme.zIndex.modal - 1,
+    }),
+  })
+);
 
 const ContentRow = styled('div', { name: 'Window', slot: 'row' })(() => ({
   ...rowMixin,
@@ -53,19 +55,28 @@ const ContentColumn = styled('div', { name: 'Window', slot: 'column' })(() => ({
   ...columnMixin,
 }));
 
-const StyledPrimaryWindow = styled(PrimaryWindow, { name: 'Window', slot: 'primary' })(() => ({
+const StyledPrimaryWindow = styled(PrimaryWindow, {
+  name: 'Window',
+  slot: 'primary',
+})(() => ({
   ...rowMixin,
   height: '300px',
   position: 'relative',
 }));
 
-const StyledCompanionAreaBottom = styled(CompanionArea, { name: 'Window', slot: 'bottom' })(() => ({
+const StyledCompanionAreaBottom = styled(CompanionArea, {
+  name: 'Window',
+  slot: 'bottom',
+})(() => ({
   ...rowMixin,
   flex: '0',
   flexBasis: 'auto',
 }));
 
-const StyledCompanionAreaRight = styled('div', { name: 'Window', slot: 'right' })(() => ({
+const StyledCompanionAreaRight = styled('div', {
+  name: 'Window',
+  slot: 'right',
+})(() => ({
   ...rowMixin,
   flex: '0 1 auto',
 }));
@@ -73,7 +84,9 @@ const StyledCompanionAreaRight = styled('div', { name: 'Window', slot: 'right' }
 /** Window title bar wrapper for drag controls in the mosaic view */
 const DraggableNavBar = ({ children, ...props }) => {
   const { mosaicWindowActions } = useContext(MosaicWindowContext);
-  return mosaicWindowActions.connectDragSource(<nav {...props}>{children}</nav>);
+  return mosaicWindowActions.connectDragSource(
+    <nav {...props}>{children}</nav>
+  );
 };
 
 /**
@@ -84,6 +97,7 @@ export function Window({
   focusWindow = () => {},
   label = null,
   isFetching = false,
+  rightSideBarOpen = false,
   sideBarOpen = false,
   view = undefined,
   windowDraggable = null,
@@ -114,19 +128,30 @@ export function Window({
         aria-label={t('window', { label })}
       >
         <WindowTopBar
-          component={workspaceType === 'mosaic' && windowDraggable ? DraggableNavBar : undefined}
+          component={
+            workspaceType === 'mosaic' && windowDraggable
+              ? DraggableNavBar
+              : undefined
+          }
           windowId={windowId}
           windowDraggable={windowDraggable}
         />
         <IIIFAuthentication windowId={windowId} />
-        {manifestError && <ErrorContent error={{ stack: manifestError }} windowId={windowId} />}
+        {manifestError && (
+          <ErrorContent error={{ stack: manifestError }} windowId={windowId} />
+        )}
         <ContentRow>
           <ContentColumn>
-            <StyledPrimaryWindow view={view} windowId={windowId} isFetching={isFetching} sideBarOpen={sideBarOpen} />
+            <StyledPrimaryWindow
+              view={view}
+              windowId={windowId}
+              isFetching={isFetching}
+              sideBarOpen={sideBarOpen}
+              rightSideBarOpen={rightSideBarOpen}
+            />
             <StyledCompanionAreaBottom windowId={windowId} position="bottom" />
           </ContentColumn>
           <StyledCompanionAreaRight>
-            <CompanionArea windowId={windowId} position="right" />
             <CompanionArea windowId={windowId} position="far-right" />
           </StyledCompanionAreaRight>
         </ContentRow>
@@ -144,6 +169,7 @@ Window.propTypes = {
   label: PropTypes.string,
   manifestError: PropTypes.string,
   maximized: PropTypes.bool,
+  rightSideBarOpen: PropTypes.bool,
   sideBarOpen: PropTypes.bool,
   view: PropTypes.string,
   windowDraggable: PropTypes.bool,

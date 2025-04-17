@@ -93,11 +93,17 @@ export function PrimaryWindow({
   };
 
   return (
-    <Root data-testid="test-window" className={classNames(ns('primary-window'), className)}>
+    <Root
+      data-testid="test-window"
+      className={classNames(ns('primary-window'), className)}
+    >
       <WindowSideBar windowId={windowId} />
       <CompanionArea windowId={windowId} position="left" />
       {isCollectionDialogVisible && <CollectionDialog windowId={windowId} />}
-      <Suspense fallback={<div />}>{children || <TypeSpecificViewer {...viewerProps} />}</Suspense>
+      <Suspense fallback={<div />}>
+        {children || <TypeSpecificViewer {...viewerProps} />}
+      </Suspense>
+      <CompanionArea windowId={windowId} position="right" />
       <WindowRightSideBar windowId={windowId} />
     </Root>
   );

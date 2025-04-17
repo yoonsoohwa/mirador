@@ -20,11 +20,9 @@ export function getCompanionWindows(state) {
  * @returns {object|undefined}
  */
 export const getCompanionWindow = createSelector(
-  [
-    getCompanionWindows,
-    (state, { companionWindowId }) => companionWindowId,
-  ],
-  (companionWindows, companionWindowId) => companionWindowId && companionWindows[companionWindowId],
+  [getCompanionWindows, (state, { companionWindowId }) => companionWindowId],
+  (companionWindows, companionWindowId) =>
+    companionWindowId && companionWindows[companionWindowId]
 );
 
 /**
@@ -36,7 +34,7 @@ export const getCompanionWindow = createSelector(
  */
 export const getCompanionWindowLocale = createSelector(
   [getCompanionWindow],
-  companionWindow => companionWindow && companionWindow.locale,
+  (companionWindow) => companionWindow && companionWindow.locale
 );
 
 /**
@@ -47,13 +45,11 @@ export const getCompanionWindowLocale = createSelector(
  * @returns {string|undefined}
  */
 export const getThumbnailNavigationPosition = createSelector(
-  [
-    getWindow,
-    getCompanionWindows,
-  ],
-  (window, companionWindows) => window
-    && companionWindows[window.thumbnailNavigationId]
-    && companionWindows[window.thumbnailNavigationId].position,
+  [getWindow, getCompanionWindows],
+  (window, companionWindows) =>
+    window &&
+    companionWindows[window.thumbnailNavigationId] &&
+    companionWindows[window.thumbnailNavigationId].position
 );
 
 /**
@@ -63,16 +59,17 @@ export const getThumbnailNavigationPosition = createSelector(
  */
 const getCompanionWindowIndexByWindowAndPosition = createSelector(
   [getWindows, getCompanionWindows],
-  (windows, companionWindows) => (
-    (Object.keys(windows) || []).reduce((obj, id) => (
-      {
+  (windows, companionWindows) =>
+    (Object.keys(windows) || []).reduce(
+      (obj, id) => ({
         ...obj,
         [id]: groupBy(
           windows[id].companionWindowIds,
-          cwid => companionWindows[cwid] && companionWindows[cwid].position,
+          (cwid) => companionWindows[cwid] && companionWindows[cwid].position
         ),
-      }), {})
-  ),
+      }),
+      {}
+    )
 );
 
 /**
@@ -82,15 +79,17 @@ const getCompanionWindowIndexByWindowAndPosition = createSelector(
  */
 const getCompanionWindowsByWindowAndPosition = createSelector(
   [getWindows, getCompanionWindows],
-  (windows, companionWindows) => (
-    (Object.keys(windows) || []).reduce((obj, id) => ({
-      ...obj,
-      [id]: groupBy(
-        windows[id].companionWindowIds.map(cwid => companionWindows[cwid]),
-        cw => cw.position,
-      ),
-    }), {})
-  ),
+  (windows, companionWindows) =>
+    (Object.keys(windows) || []).reduce(
+      (obj, id) => ({
+        ...obj,
+        [id]: groupBy(
+          windows[id].companionWindowIds.map((cwid) => companionWindows[cwid]),
+          (cw) => cw.position
+        ),
+      }),
+      {}
+    )
 );
 
 /**
@@ -101,7 +100,7 @@ const getCompanionWindowsByWindowAndPosition = createSelector(
  */
 const getCompanionWindowsOfWindow = createSelector(
   [(state, { windowId }) => windowId, getCompanionWindowsByWindowAndPosition],
-  (windowId, companionWindows) => companionWindows[windowId] || EMPTY_OBJECT,
+  (windowId, companionWindows) => companionWindows[windowId] || EMPTY_OBJECT
 );
 
 /**
@@ -111,8 +110,11 @@ const getCompanionWindowsOfWindow = createSelector(
  * @returns {Array}
  */
 const getCompanionWindowIdsOfWindow = createSelector(
-  [(state, { windowId }) => windowId, getCompanionWindowIndexByWindowAndPosition],
-  (windowId, companionWindowIds) => companionWindowIds[windowId] || EMPTY_OBJECT,
+  [
+    (state, { windowId }) => windowId,
+    getCompanionWindowIndexByWindowAndPosition,
+  ],
+  (windowId, companionWindowIds) => companionWindowIds[windowId] || EMPTY_OBJECT
 );
 
 /**
@@ -123,11 +125,8 @@ const getCompanionWindowIdsOfWindow = createSelector(
  * @returns {string}
  */
 export const getCompanionWindowsForPosition = createSelector(
-  [
-    getCompanionWindowsOfWindow,
-    (state, { position }) => (position),
-  ],
-  (companionWindows, position) => companionWindows[position] || EMPTY_ARRAY,
+  [getCompanionWindowsOfWindow, (state, { position }) => position],
+  (companionWindows, position) => companionWindows[position] || EMPTY_ARRAY
 );
 
 /**
@@ -138,13 +137,11 @@ export const getCompanionWindowsForPosition = createSelector(
  * @returns {string}
  */
 export const getCompanionWindowsForContent = createSelector(
-  [
-    getCompanionWindowsOfWindow,
-    (state, { content }) => (content),
-  ],
-  (companionWindows, content) => (
-    [].concat(...Object.values(companionWindows)).filter(w => w.content === content)
-  ),
+  [getCompanionWindowsOfWindow, (state, { content }) => content],
+  (companionWindows, content) =>
+    []
+      .concat(...Object.values(companionWindows))
+      .filter((w) => w.content === content)
 );
 
 /**
@@ -156,11 +153,8 @@ export const getCompanionWindowsForContent = createSelector(
  * @returns {Array}
  */
 export const getCompanionWindowIdsForPosition = createSelector(
-  [
-    getCompanionWindowIdsOfWindow,
-    (state, { position }) => (position),
-  ],
-  (companionWindowIds, position) => companionWindowIds[position] || EMPTY_ARRAY,
+  [getCompanionWindowIdsOfWindow, (state, { position }) => position],
+  (companionWindowIds, position) => companionWindowIds[position] || EMPTY_ARRAY
 );
 
 /**
@@ -170,16 +164,23 @@ export const getCompanionWindowIdsForPosition = createSelector(
  * @returns {boolean}
  */
 export const getCompanionAreaVisibility = createSelector(
-  [
-    (state, { position }) => position,
-    getWindow,
-  ],
+  [(state, { position }) => position, getWindow],
   (position, window) => {
     if (!window) return false;
-    const { companionAreaOpen, sideBarOpen } = window;
-    if (position !== 'left') return true;
-    return !!(companionAreaOpen && sideBarOpen);
-  },
+    const {
+      companionAreaOpen,
+      companionRightAreaOpen,
+      sideBarOpen,
+      rightSideBarOpen,
+    } = window;
+    if (position === 'left') {
+      return !!(companionAreaOpen && sideBarOpen);
+    }
+    if (position === 'right') {
+      return !!(companionRightAreaOpen && rightSideBarOpen);
+    }
+    return true;
+  }
 );
 
 /**
@@ -204,5 +205,5 @@ export const selectCompanionWindowDimensions = createSelector(
     });
 
     return { height, width };
-  },
+  }
 );
