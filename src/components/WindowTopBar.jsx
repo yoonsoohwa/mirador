@@ -12,8 +12,6 @@ import WindowTopBarPluginMenu from '../containers/WindowTopBarPluginMenu';
 import WindowTopBarTitle from '../containers/WindowTopBarTitle';
 import MiradorMenuButton from '../containers/MiradorMenuButton';
 import FullScreenButton from '../containers/FullScreenButton';
-import WorkspaceOptionsButton from '../containers/WorkspaceOptionsButton';
-import WorkspaceMenuButton from '../containers/WorkspaceMenuButton';
 import Branding from '../containers/Branding';
 import WindowMaxIcon from './icons/WindowMaxIcon';
 import WindowMinIcon from './icons/WindowMinIcon';
@@ -23,10 +21,15 @@ const Root = styled(AppBar, { name: 'WindowTopBar', slot: 'root' })(() => ({
   zIndex: 1100,
 }));
 
-const StyledToolbar = styled(Toolbar, { name: 'WindowTopBar', slot: 'toolbar' })(({ ownerState, theme }) => ({
+const StyledToolbar = styled(Toolbar, {
+  name: 'WindowTopBar',
+  slot: 'toolbar',
+})(({ ownerState, theme }) => ({
   backgroundColor: theme.palette.shades?.main,
   borderTop: '2px solid',
-  borderTopColor: ownerState?.focused ? theme.palette.primary.main : 'transparent',
+  borderTopColor: ownerState?.focused
+    ? theme.palette.primary.main
+    : 'transparent',
   minHeight: 32,
   paddingLeft: theme.spacing(0.5),
   paddingRight: theme.spacing(0.5),
@@ -35,7 +38,10 @@ const StyledToolbar = styled(Toolbar, { name: 'WindowTopBar', slot: 'toolbar' })
   }),
 }));
 
-const StyledBranding = styled(Branding, { name: 'WindowTopBar', slot: 'branding' })(({ theme }) => ({
+const StyledBranding = styled(Branding, {
+  name: 'WindowTopBar',
+  slot: 'branding',
+})(({ theme }) => ({
   boxSizing: 'border-box',
   height: '100%',
   width: 'fit-content',
@@ -94,7 +100,12 @@ export function WindowTopBar({
           </MiradorMenuButton>
         )}
         <WindowTopBarTitle windowId={windowId} />
-        {allowTopMenuButton && <WindowTopMenuButton windowId={windowId} className={ns('window-menu-btn')} />}
+        {allowTopMenuButton && (
+          <WindowTopMenuButton
+            windowId={windowId}
+            className={ns('window-menu-btn')}
+          />
+        )}
         <WindowTopBarPluginArea windowId={windowId} />
         <WindowTopBarPluginMenu windowId={windowId} />
         {allowMaximize && (
@@ -106,7 +117,9 @@ export function WindowTopBar({
             {maximized ? <WindowMinIcon /> : <WindowMaxIcon />}
           </MiradorMenuButton>
         )}
-        {allowFullscreen && <FullScreenButton className={ns('window-menu-btn')} />}
+        {allowFullscreen && (
+          <FullScreenButton className={ns('window-menu-btn')} />
+        )}
         {allowClose && (
           <MiradorMenuButton
             aria-label={t('closeWindow')}
@@ -116,7 +129,6 @@ export function WindowTopBar({
             <CloseIcon />
           </MiradorMenuButton>
         )}
-        <FullScreenButton color="success" />
       </StyledToolbar>
     </Root>
   );
