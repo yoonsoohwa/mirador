@@ -44,13 +44,24 @@ const StyledBranding = styled(Branding, {
 })(({ theme }) => ({
   boxSizing: 'border-box',
   height: '100%',
-  width: 'fit-content',
+  width: '155px',
   [theme.breakpoints.up('xs')]: {
     display: 'none',
   },
   [theme.breakpoints.up('sm')]: {
     display: 'flex',
   },
+}));
+
+const StyledButtonContainer = styled('div', {
+  name: 'WindowTopBarButtons',
+  slot: 'ButtonArea',
+})(() => ({
+  boxSizing: 'border-box',
+  display: 'flex',
+  height: '100%',
+  justifyContent: 'end',
+  width: '155px',
 }));
 
 /**
@@ -100,35 +111,40 @@ export function WindowTopBar({
           </MiradorMenuButton>
         )}
         <WindowTopBarTitle windowId={windowId} />
-        {allowTopMenuButton && (
-          <WindowTopMenuButton
-            windowId={windowId}
-            className={ns('window-menu-btn')}
-          />
-        )}
-        <WindowTopBarPluginArea windowId={windowId} />
-        <WindowTopBarPluginMenu windowId={windowId} />
-        {allowMaximize && (
-          <MiradorMenuButton
-            aria-label={maximized ? t('minimizeWindow') : t('maximizeWindow')}
-            className={classNames(ns('window-maximize'), ns('window-menu-btn'))}
-            onClick={maximized ? minimizeWindow : maximizeWindow}
-          >
-            {maximized ? <WindowMinIcon /> : <WindowMaxIcon />}
-          </MiradorMenuButton>
-        )}
-        {allowFullscreen && (
-          <FullScreenButton className={ns('window-menu-btn')} />
-        )}
-        {allowClose && (
-          <MiradorMenuButton
-            aria-label={t('closeWindow')}
-            className={classNames(ns('window-close'), ns('window-menu-btn'))}
-            onClick={removeWindow}
-          >
-            <CloseIcon />
-          </MiradorMenuButton>
-        )}
+        <StyledButtonContainer>
+          {allowTopMenuButton && (
+            <WindowTopMenuButton
+              windowId={windowId}
+              className={ns('window-menu-btn')}
+            />
+          )}
+          <WindowTopBarPluginArea windowId={windowId} />
+          <WindowTopBarPluginMenu windowId={windowId} />
+          {allowMaximize && (
+            <MiradorMenuButton
+              aria-label={maximized ? t('minimizeWindow') : t('maximizeWindow')}
+              className={classNames(
+                ns('window-maximize'),
+                ns('window-menu-btn')
+              )}
+              onClick={maximized ? minimizeWindow : maximizeWindow}
+            >
+              {maximized ? <WindowMinIcon /> : <WindowMaxIcon />}
+            </MiradorMenuButton>
+          )}
+          {allowFullscreen && (
+            <FullScreenButton className={ns('window-menu-btn')} />
+          )}
+          {allowClose && (
+            <MiradorMenuButton
+              aria-label={t('closeWindow')}
+              className={classNames(ns('window-close'), ns('window-menu-btn'))}
+              onClick={removeWindow}
+            >
+              <CloseIcon />
+            </MiradorMenuButton>
+          )}
+        </StyledButtonContainer>
       </StyledToolbar>
     </Root>
   );

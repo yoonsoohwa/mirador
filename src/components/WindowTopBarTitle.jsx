@@ -6,14 +6,18 @@ import ErrorIcon from '@mui/icons-material/ErrorOutlineSharp';
 
 const StyledTitleTypography = styled(TitleTypography)(({ theme }) => ({
   ...theme.typography.h6,
+  color: '#ffffff',
   flexGrow: 1,
   paddingLeft: theme.spacing(0.5),
+  textAlign: 'center',
 }));
 
 const StyledTitle = styled('div')(({ theme }) => ({
   ...theme.typography.h6,
+  color: '#ffffff',
   flexGrow: 1,
   paddingLeft: theme.spacing(0.5),
+  textAlign: 'center',
 }));
 /** */
 function TitleTypography({ children, ...props }) {
@@ -32,7 +36,10 @@ TitleTypography.propTypes = {
  * WindowTopBarTitle
  */
 export function WindowTopBarTitle({
-  error = null, hideWindowTitle = false, isFetching = false, manifestTitle = '',
+  error = null,
+  hideWindowTitle = false,
+  isFetching = false,
+  manifestTitle = '',
 }) {
   let title = null;
   if (isFetching) {
@@ -51,13 +58,9 @@ export function WindowTopBarTitle({
       </>
     );
   } else if (hideWindowTitle) {
-    title = (<StyledTitle />);
+    title = <StyledTitle />;
   } else {
-    title = (
-      <StyledTitleTypography>
-        {manifestTitle}
-      </StyledTitleTypography>
-    );
+    title = <StyledTitleTypography>{manifestTitle}</StyledTitleTypography>;
   }
   return title;
 }

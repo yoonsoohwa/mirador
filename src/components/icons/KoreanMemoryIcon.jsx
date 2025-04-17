@@ -5,7 +5,13 @@ import SvgIcon from '@mui/material/SvgIcon';
  */
 export default function KoreanMemoryIcon(props) {
   return (
-    <SvgIcon viewBox="0 0 223 61" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <SvgIcon
+      viewBox="0 0 223 61"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      sx={{ height: '100%', width: 'auto' }}
+      {...props}
+    >
       <g clipPath="url(#clip0_1452_931)">
         <path
           d="M37.6345 49.9315C34.2843 49.9315 31.4786 47.9995 30.058 46.3993C29.6081 45.8896 29.6555 45.1073 30.1527 44.6569C30.6617 44.2065 31.4431 44.242 31.8929 44.7517C32.4138 45.3325 37.1255 50.2278 42.7251 45.2614C43.2341 44.811 44.0154 44.8584 44.4653 45.3681C44.9152 45.8778 44.8678 46.6601 44.3588 47.1105C42.0384 49.1729 39.7299 49.9315 37.6345 49.9315Z"
@@ -74,7 +80,12 @@ export default function KoreanMemoryIcon(props) {
       </g>
       <defs>
         <clipPath id="clip0_1452_931">
-          <rect width="223" height="60" fill="white" transform="translate(0 0.907318)" />
+          <rect
+            width="223"
+            height="60"
+            fill="white"
+            transform="translate(0 0.907318)"
+          />
         </clipPath>
       </defs>
     </SvgIcon>
