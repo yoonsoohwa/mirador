@@ -14,10 +14,10 @@ import { ViewerNavigation } from '../components/ViewerNavigation';
 const mapStateToProps = (state, { windowId }) => {
   const canvases = getCanvases(state, { windowId });
   return {
-    firstCanvasId: canvases[0].id,
+    canvasCount: canvases.length,
+    canvases,
     hasNextCanvas: !!getNextCanvasGrouping(state, { windowId }),
     hasPreviousCanvas: !!getPreviousCanvasGrouping(state, { windowId }),
-    lastCanvasId: canvases[canvases.length - 1].id,
     viewingDirection: getSequenceViewingDirection(state, { windowId }),
   };
 };

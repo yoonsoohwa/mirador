@@ -10,8 +10,8 @@ import ViewerInfo from '../containers/ViewerInfo';
 /**
  */
 export function ViewerNavigation({
-  firstCanvasId,
-  lastCanvasId,
+  canvasCount,
+  canvases,
   setCanvas,
   hasNextCanvas = false,
   hasPreviousCanvas = false,
@@ -21,6 +21,8 @@ export function ViewerNavigation({
   windowId,
 }) {
   const { t } = useTranslation();
+  const firstCanvasId = canvases[0].id;
+  const lastCanvasId = canvases[canvasCount - 1].id;
   let htmlDir = 'ltr';
   let previousIconStyle = {};
   let nextIconStyle = {};
@@ -44,7 +46,11 @@ export function ViewerNavigation({
   }
 
   return (
-    <div className={classNames(ns('osd-navigation'))} dir={htmlDir} style={{ display: 'flex' }}>
+    <div
+      className={classNames(ns('osd-navigation'))}
+      dir={htmlDir}
+      style={{ display: 'flex' }}
+    >
       <MiradorMenuButton
         aria-label={t('firstCanvas')}
         className={ns('first-canvas-button')}
@@ -91,10 +97,10 @@ export function ViewerNavigation({
 }
 
 ViewerNavigation.propTypes = {
-  firstCanvasId: PropTypes.string.isRequired,
+  canvasCount: PropTypes.number.isRequired,
+  canvases: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   hasNextCanvas: PropTypes.bool,
   hasPreviousCanvas: PropTypes.bool,
-  lastCanvasId: PropTypes.string.isRequired,
   setCanvas: PropTypes.func.isRequired,
   setNextCanvas: PropTypes.func,
   setPreviousCanvas: PropTypes.func,
